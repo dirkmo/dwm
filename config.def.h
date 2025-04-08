@@ -6,8 +6,8 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int rmaster            = 1;        /* 1 means master-area is initially on the right */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 0;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=12" };
-static const char dmenufont[]       = "monospace:size=12";
+static const char *fonts[]          = { "Roboto Mono:size=12" }; // see installed fonts with "fc-list"
+static const char dmenufont[]       = "Roboto Mono:size=12";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -101,6 +101,11 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY,                       XK_v,      spawn,          {.v = bravecmd } },
+	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = (const char*[]){"brave", "--incognito", NULL } } },
+	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = (const char*[]){"alacritty", "-e", "dlp.sh", NULL } } },
+    { MODKEY,                       XK_y,      spawn,          SHCMD("monitor-dual.sh")},
+    { MODKEY|ShiftMask,             XK_y,      spawn,          SHCMD("monitor-single.sh")},
 };
 
 /* button definitions */
