@@ -104,8 +104,9 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_v,      spawn,          {.v = bravecmd } },
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = (const char*[]){"brave", "--incognito", NULL } } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = (const char*[]){"alacritty", "-e", "dlp.sh", NULL } } },
-    { MODKEY,                       XK_y,      spawn,          SHCMD("monitor-dual.sh")},
-    { MODKEY|ShiftMask,             XK_y,      spawn,          SHCMD("monitor-single.sh")},
+    { MODKEY,                       XK_y,      spawn,          SHCMD("/vol/config/scripts/monitor-dual.sh")},
+    { MODKEY|ShiftMask,             XK_y,      spawn,          SHCMD("/vol/config/scripts/monitor-single.sh")},
+	{ MODKEY,                       XK_plus,   spawn,          SHCMD("/vol/pwcb.sh")},
 };
 
 /* button definitions */
