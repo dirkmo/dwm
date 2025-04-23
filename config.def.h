@@ -13,10 +13,11 @@ static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
+static const char col_focusedborder[] = "#00bb00";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeSel]  = { col_gray4, col_cyan,  col_focusedborder  },
 };
 
 /* tagging */
@@ -60,37 +61,36 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
-static const char *bravecmd[]  = { "brave", NULL };
 
 #include "movestack.c"
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_b,      togglebar,      {0} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
-	{ MODKEY,                       XK_Return, zoom,           {0} },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
-	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
-	{ MODKEY,                       XK_r,      togglermaster,  {0} },
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } }, // dmenu
+	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } }, // terminal
+	{ MODKEY,                       XK_b,      togglebar,      {0} }, // toggle bar
+	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } }, // select next window in stack
+	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } }, // select previous window in stack
+	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } }, // increase number of windows in master area
+	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } }, // decrease number of windows in master area
+	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} }, // resize window: move border left
+	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} }, // resize window: move border right
+	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } }, // move window up in stack
+	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } }, // move window down in stack
+	{ MODKEY,                       XK_Return, zoom,           {0} }, // swap master window with stack window
+	{ MODKEY,                       XK_Tab,    view,           {0} }, // switch between recent tags
+	{ MODKEY|ShiftMask,             XK_c,      killclient,     {0} }, // kill window
+	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} }, // master/stack layout
+	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} }, // floating layout
+	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} }, // monocle layout
+	{ MODKEY,                       XK_space,  setlayout,      {0} }, // switch to last layout
+	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} }, // toggle floating state
+	{ MODKEY,                       XK_r,      togglermaster,  {0} }, // switch side of master area (left or right of screen)
+	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } }, // view all tags at once
+	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } }, // add current window to all tags
+	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } }, // focus previous monitor
+	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } }, // focus next monitor
+	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } }, // move window to previous monitor
+	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } }, // move window to next monitor
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -102,12 +102,13 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} }, // quit DWM
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, // restart DWM
-	{ MODKEY,                       XK_v,      spawn,          {.v = bravecmd } },
-	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = (const char*[]){"brave", "--incognito", NULL } } },
+	{ MODKEY,                       XK_v,      spawn,          {.v = (const char*[]){ "brave", NULL } } }, // start Brave browser
+	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = (const char*[]){"brave", "--incognito", NULL } } }, // start Brave browser in incognito mode
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = (const char*[]){"alacritty", "-e", "dlp.sh", NULL } } },
-    { MODKEY,                       XK_y,      spawn,          SHCMD("/vol/config/scripts/monitor-dual.sh")},
-    { MODKEY|ShiftMask,             XK_y,      spawn,          SHCMD("/vol/config/scripts/monitor-single.sh")},
+    { MODKEY,                       XK_y,      spawn,          SHCMD("/vol/config/scripts/monitor-dual.sh")}, // enable dual-monitor
+    { MODKEY|ShiftMask,             XK_y,      spawn,          SHCMD("/vol/config/scripts/monitor-single.sh")}, // enable single-monitor
 	{ MODKEY,                       XK_plus,   spawn,          SHCMD("/vol/pwcb.sh")},
+	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("systemctl suspend")}, // suspend computer
 };
 
 /* button definitions */
