@@ -37,9 +37,13 @@ install: all
 	mkdir -p ${DESTDIR}${MANPREFIX}/man1
 	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
+	mkdir -p ${DESTDIR}${PREFIX}/share/dwm
+	cp -f config.h dwm_keys.py ${DESTDIR}${PREFIX}/share/dwm
+	chmod 755 ${DESTDIR}${PREFIX}/share/dwm/dwm_keys.py
 
 uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
 		${DESTDIR}${MANPREFIX}/man1/dwm.1
+	rm -rf ${DESTDIR}${PREFIX}/share/dwm
 
 .PHONY: all clean dist install uninstall
