@@ -54,7 +54,7 @@ static const Layout layouts[] = {
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
-#define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+#define SHCMD(cmd) { .v = (const char*[]){ "/bin/bash", "-c", cmd, NULL } }
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -100,7 +100,8 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
-	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} }, // quit DWM
+	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, // restart DWM
 	{ MODKEY,                       XK_v,      spawn,          {.v = bravecmd } },
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = (const char*[]){"brave", "--incognito", NULL } } },
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = (const char*[]){"alacritty", "-e", "dlp.sh", NULL } } },
