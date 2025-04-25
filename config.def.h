@@ -28,9 +28,10 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	// { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class      instance    title       tags mask     isfloating   monitor    scratch key*/
+	{ "Gimp",     NULL,       NULL,       0,            1,           -1,        0 },
+	// { "Firefox",  NULL,       NULL,       1 << 8,       0,           -1,        0 },
+	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,       's' },
 };
 
 /* layout(s) */
@@ -61,6 +62,10 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
+
+/* First arg only serves to match against key in rules */
+// static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-e", "pulsemixer", NULL};
+static const char *scratchpadcmd[] = {"s", "alacritty", "--title", "scratchpad", "-o", "window.dimensions.columns=120", "-o", "window.dimensions.lines=50", "-e", "/usr/local/share/dwm/dwm_showkeys.sh", NULL};
 
 #include "movestack.c"
 static const Key keys[] = {
@@ -109,6 +114,7 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,             XK_y,      spawn,          SHCMD("/vol/config/scripts/monitor-single.sh")}, // enable single-monitor
 	{ MODKEY,                       XK_plus,   spawn,          SHCMD("/vol/pwcb.sh")},
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("systemctl suspend")}, // suspend computer
+	{ MODKEY,                       XK_dead_circumflex,  togglescratch,  {.v = scratchpadcmd } }, // show keybindings
 };
 
 /* button definitions */
