@@ -23,6 +23,7 @@ with open("config.h") as f:
                 key = key.replace("MODKEY", "Super")
                 key = key.replace("ShiftMask", "Shift")
                 key = key.replace("ControlMask", "Ctrl")
+                key = key.replace("Mod1Mask", "Alt")
                 commentpos = l.find("//")
                 comment = ""
                 if commentpos > 0:

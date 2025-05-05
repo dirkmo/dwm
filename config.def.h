@@ -107,6 +107,7 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} }, // quit DWM
 	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} }, // restart DWM
+	{ MODKEY|ControlMask|Mod1Mask,  XK_q,      spawn,          SHCMD("/vol/config/scripts/shutdown.sh") }, // Shutdown PC
 	{ MODKEY,                       XK_v,      spawn,          {.v = (const char*[]){ "brave", NULL } } }, // start Brave browser
 	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = (const char*[]){"brave", "--incognito", NULL } } }, // start Brave browser in incognito mode
 	{ MODKEY|ShiftMask,             XK_p,      spawn,          {.v = (const char*[]){"alacritty", "-e", "dlp.sh", NULL } } },
